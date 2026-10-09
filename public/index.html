@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Projeto de demonstração de CI/CD com GitHub Actions e Vercel">
+  <title>Pipeline CI/CD</title>
+  <style>
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      padding: 24px;
+      font-family: system-ui, sans-serif;
+      color: #e5e7eb;
+      background: #0b1020;
+    }
+
+    main {
+      width: min(100%, 620px);
+      padding: 36px;
+      border: 1px solid #29334d;
+      border-radius: 20px;
+      background: #131b2e;
+    }
+
+    h1 { font-size: clamp(2rem, 6vw, 3.2rem); }
+    p { line-height: 1.7; color: #aab7cf; }
+
+    a {
+      display: inline-block;
+      margin: 8px 12px 0 0;
+      color: #93c5fd;
+    }
+
+    #status { color: #86efac; }
+  </style>
+</head>
+<body>
+  <main>
+    <p>GITHUB ACTIONS + VERCEL</p>
+    <h1>Pipeline funcionando 🚀</h1>
+    <p>Uma aplicação de demonstração com testes, integração contínua e deploy.</p>
+    <p id="status">Verificando a API...</p>
+    <a href="/api/hello?name=Ana">Testar saudação</a>
+    <a href="/api/health">Verificar saúde</a>
+  </main>
+
+  <script>
+    fetch('/api/health')
+      .then(response => {
+        if (!response.ok) throw new Error('API indisponível');
+        return response.json();
+      })
+      .then(data => {
+        document.querySelector('#status').textContent =
+          `API: ${data.status}`;
+      })
+      .catch(() => {
+        document.querySelector('#status').textContent =
+          'API indisponível';
+      });
+  </script>
+</body>
+</html>
